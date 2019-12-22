@@ -1,5 +1,3 @@
-# images:
-#   hyperkube: image-repository
 # bootstrapToken: hugo
 # configFilePath: /var/lib/cloud-config-downloader/downloads/cloud_config
 # workers:

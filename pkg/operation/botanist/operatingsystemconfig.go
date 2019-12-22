@@ -147,7 +147,7 @@ func (b *Botanist) generateOriginalConfig() (map[string]interface{}, error) {
 	}
 	originalConfig["caBundle"] = caBundle
 
-	return b.InjectShootShootImages(originalConfig, common.HyperkubeImageName, common.PauseContainerImageName)
+	return b.InjectShootShootImages(originalConfig, common.PauseContainerImageName)
 }
 
 func (b *Botanist) deployOperatingSystemConfigsForWorker(machineTypes []gardencorev1alpha1.MachineType, machineImage *gardencorev1alpha1.ShootMachineImage, downloaderConfig, originalConfig map[string]interface{}, worker gardencorev1alpha1.Worker) (*shoot.OperatingSystemConfigs, error) {
@@ -402,11 +402,6 @@ func (b *Botanist) generateCloudConfigExecutionChart() (*chartrenderer.RenderedC
 		"bootstrapToken": kutil.BootstrapTokenFrom(bootstrapTokenSecret.Data),
 		"configFilePath": common.CloudConfigFilePath,
 		"workers":        workers,
-	}
-
-	config, err = b.InjectShootShootImages(config, common.HyperkubeImageName)
-	if err != nil {
-		return nil, err
 	}
 
 	return b.ChartApplierShoot.Render(filepath.Join(common.ChartPath, "shoot-cloud-config"), "shoot-cloud-config-execution", metav1.NamespaceSystem, config)
